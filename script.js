@@ -267,44 +267,196 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// ── TERMINAL EASTER EGG: BACKTICK SHORTCUT & TOAST ──
-(function terminalEasterEgg() {
-  const TOAST_DELAY = 1000;   // show toast after 1s
-  const TOAST_AUTODISMISS = 12000; // auto-hide after 12s
-  const toast = document.getElementById('terminal-toast');
-  if (!toast) return;
+// ── HACKER INTRUSION OVERLAY ──────────────────────────
+(function hackerOverlay() {
+  if (sessionStorage.getItem('hackerSeen')) return;
 
-  let autoHideTimer;
+  const overlay = document.getElementById('hacker-overlay');
+  const hackTerm = document.getElementById('hack-terminal');
+  const hackChat = document.getElementById('hack-chat');
+  const hackOut = document.getElementById('hack-output');
+  const hackCta = document.getElementById('hack-cta');
+  const chatMsgs = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chatInput');
+  const quickReplies = document.getElementById('quickReplies');
+  if (!overlay) return;
 
-  function showToast() {
-    // Only show once per session
-    if (sessionStorage.getItem('termToastSeen')) return;
-    toast.style.display = 'block';
-    toast.classList.remove('toast-hide');
-    autoHideTimer = setTimeout(hideToast, TOAST_AUTODISMISS);
+  // Mini matrix rain on hack canvas
+  const canvas = document.getElementById('hackCanvas');
+  const ctx = canvas.getContext('2d');
+  const chars = '01ABCDEFrishabh@portfolio#TERRAFORM.AWS.GCP';
+  const fs = 12;
+  let hackCols, hackDrops, hackInterval;
+  function resizeHack() {
+    canvas.width = overlay.offsetWidth;
+    canvas.height = overlay.offsetHeight;
+    hackCols = Math.floor(canvas.width / fs);
+    hackDrops = Array.from({ length: hackCols }, () => Math.floor(Math.random() * -40));
+  }
+  function drawHack() {
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = `${fs}px JetBrains Mono, monospace`;
+    hackDrops.forEach((y, i) => {
+      ctx.fillStyle = `rgba(0,255,65,${Math.random() > 0.9 ? 0.85 : 0.3})`;
+      ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fs, y * fs);
+      if (y * fs > canvas.height && Math.random() > 0.975) hackDrops[i] = 0;
+      hackDrops[i]++;
+    });
+  }
+  resizeHack();
+  window.addEventListener('resize', resizeHack);
+  hackInterval = setInterval(drawHack, 45);
+
+  // Hack terminal type-in sequence
+  const LINES = [
+    { html: '<span class="hack-r">⚠  SYSTEM BREACH DETECTED</span>', delay: 0 },
+    { html: '<span class="hack-d">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>', delay: 300 },
+    { html: '<span class="hack-g">$</span> <span class="hack-d">./scan_target.sh --deep</span>', delay: 600 },
+    { html: '<span class="hack-d">  Scanning IP: 192.168.x.xxx...</span>', delay: 1000 },
+    { html: '<span class="hack-o">  [████████████████████] 100%</span>', delay: 1400 },
+    { html: '<span class="hack-d">──────────────────────────────────────</span>', delay: 1800 },
+    { html: '<span class="hack-c">TARGET IDENTIFIED:</span>', delay: 2100 },
+    { html: '<span class="hack-g">  NAME    </span><span class="hack-w">= Rishabh Thakur</span>', delay: 2450 },
+    { html: '<span class="hack-g">  ROLE    </span><span class="hack-w">= Software Engineer III</span>', delay: 2750 },
+    { html: '<span class="hack-g">  COMPANY </span><span class="hack-w">= Walmart, Inc.</span>', delay: 3050 },
+    { html: '<span class="hack-g">  EXP     </span><span class="hack-w">= 6+ Years · 4 Companies</span>', delay: 3350 },
+    { html: '<span class="hack-g">  SKILLS  </span><span class="hack-w">= Terraform · AWS · GCP · Databricks · Python</span>', delay: 3650 },
+    { html: '<span class="hack-d">──────────────────────────────────────</span>', delay: 4000 },
+    { html: '<span class="hack-o">⚡ ACCESS GRANTED — portfolio unlocked</span>', delay: 4300 },
+  ];
+
+  function addHackLine(html) {
+    const el = document.createElement('span');
+    el.className = 'hack-line';
+    el.innerHTML = html;
+    hackOut.appendChild(el);
+    hackOut.scrollTop = hackOut.scrollHeight;
   }
 
-  function hideToast() {
-    clearTimeout(autoHideTimer);
-    toast.classList.add('toast-hide');
-    sessionStorage.setItem('termToastSeen', '1');
-    setTimeout(() => { toast.style.display = 'none'; }, 450);
+  function runHackSequence() {
+    LINES.forEach(({ html, delay }) => setTimeout(() => addHackLine(html), delay));
+    setTimeout(() => hackCta.classList.remove('hidden'), 4700);
   }
 
-  // Show after delay
-  setTimeout(showToast, TOAST_DELAY);
+  // Show overlay after short delay
+  setTimeout(() => {
+    overlay.style.display = 'flex';
+    runHackSequence();
+  }, 800);
 
-  // Dismiss buttons
-  document.getElementById('toastClose')?.addEventListener('click', hideToast);
-  document.getElementById('toastDismiss')?.addEventListener('click', hideToast);
+  // Dramatic close with exit animation
+  function closeOverlay() {
+    clearInterval(hackInterval);
+    sessionStorage.setItem('hackerSeen', '1');
+    const exitLines = [
+      { html: '<span class="hack-r">⚡ TERMINATING SECURE CHANNEL...</span>', delay: 0 },
+      { html: '<span class="hack-d">  Wiping session data... ████████ OK</span>', delay: 380 },
+      { html: '<span class="hack-r">  CONNECTION TERMINATED</span>', delay: 750 },
+    ];
+    hackChat.classList.add('hidden');
+    hackTerm.classList.remove('hidden');
+    hackCta.classList.add('hidden');
+    hackOut.innerHTML = '';
+    exitLines.forEach(({ html, delay }) => setTimeout(() => addHackLine(html), delay));
+    setTimeout(() => {
+      overlay.classList.add('overlay-exit');
+      setTimeout(() => { overlay.style.display = 'none'; }, 1300);
+    }, 1100);
+  }
 
-  // ── BACKTICK GLOBAL SHORTCUT ──
-  document.addEventListener('keydown', e => {
-    // Ignore if user is typing in an input/textarea
-    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
-    if (e.key === '`' || e.key === '~') {
-      e.preventDefault();
-      window.location.href = 'terminal.html';
+  // Phase 1 buttons
+  document.getElementById('hackNo').addEventListener('click', closeOverlay);
+  document.getElementById('hackYes').addEventListener('click', () => {
+    hackTerm.classList.add('hidden');
+    hackChat.classList.remove('hidden');
+    setTimeout(() => chatInput.focus(), 100);
+    botSay("🔐 Secure channel established.\n\nHi! I'm Rishabh's portfolio bot. Ask me anything about his experience, skills, education, or how to contact him.\n\nOr pick a topic 👇", true);
+    setQuickReplies(['💼 Experience', '⚙️ Skills', '🎓 Education', '📧 Contact', '🏅 Achievements']);
+  });
+  document.getElementById('hackChatClose').addEventListener('click', closeOverlay);
+
+  // Chatbot responses
+  const RESPONSES = [
+    { match: /walmart|current|present/i, reply: '💼 **Walmart, Inc.** — Software Engineer III | Denver, CO | Feb 2025–Present\n\n▶ Terraform IaC for cloud infra\n▶ Databricks for large-scale data processing\n▶ Monte Carlo + ThoughtSpot observability\n▶ CI/CD pipeline automation' },
+    { match: /bayer|data.?scientist|etl|bigquery/i, reply: '🧬 **Bayer R&D** — Assoc. Data Scientist | Dec 2023–Feb 2025\n\n▶ ETL: AWS S3 → GCP BigQuery via Glue/Lambda\n▶ 8% AWS cost reduction\n▶ 80% observability boost via Lambda alerts\n▶ 30% faster incident response w/ CI/CD' },
+    { match: /intern|sagemaker|grafana|airflow|23\.4/i, reply: '☁️ **Bayer Intern** — Cloud Engineer | May–Oct 2023\n\n▶ 23.4% cost cut automating idle SageMaker instances\n▶ Grafana dashboards for AWS monitoring\n▶ Airflow OAuth — 15% less manual onboarding' },
+    { match: /volkswagen|vw|aem|ansible|nagios/i, reply: '🚗 **Volkswagen** — Software Engineer | Nov 2018–Jan 2022\n\n▶ 20% load time reduction on AEM\n▶ Ansible CI/CD automation\n▶ Migrated to AWS CloudFormation\n▶ ELK stack observability POC' },
+    { match: /skill|tech|stack|terraform|python|aws|gcp|databricks|spark|docker/i, reply: '⚙️ **Tech Stack:**\n\n☁️ AWS · GCP · Azure\n🔧 Terraform · Ansible · Docker · Kubernetes\n📊 Databricks · Spark · BigQuery · Glue\n💻 Python · SQL · Bash\n🔁 GitHub Actions · Airflow · Grafana\n🔭 Monte Carlo · ThoughtSpot · ELK' },
+    { match: /education|degree|university|master|bachelor/i, reply: '🎓 **Education:**\n\n• MS Computer Science — UT Arlington (2022–2023)\n• BE Computer Science — Savitribai Phule Pune University (2014–2018)' },
+    { match: /contact|email|phone|reach|linkedin|hire/i, reply: '📬 **Contact Rishabh:**\n\n📧 rishabhprasadthakur@gmail.com\n📞 682-313-8425\n🔗 linkedin.com/in/rishabhpthakur\n🐙 github.com/thakur-rishabh' },
+    { match: /achiev|cost|reduc|improv|result|metric|number/i, reply: '🏅 **Key Metrics:**\n\n✅ 8% AWS cost reduction @ Bayer\n✅ 23.4% ops cost cut @ Bayer Intern\n✅ 30% decision efficiency (dashboards)\n✅ 80% observability improvement\n✅ 20% AEM load time reduction @ VW' },
+    { match: /experience|work|job|career|history/i, reply: '💼 **Career Timeline:**\n\n1. Walmart — SWE III (2025–Present)\n2. Bayer — Data Scientist (2023–2025)\n3. Bayer — Cloud Intern (2023)\n4. Volkswagen — SWE (2018–2022)\n\nAsk about any company!' },
+    { match: /hello|hi|hey|sup/i, reply: "👋 Hey! I'm Rishabh's portfolio bot.\n\nAsk me about his experience, skills, education, or how to reach him!" },
+    { match: /thank|bye|exit|close|later|quit/i, reply: "✅ Thanks for chatting! Closing secure channel in 2s...", after: () => setTimeout(closeOverlay, 2000) },
+  ];
+
+  function botSay(text, immediate = false) {
+    if (!immediate) {
+      const typing = document.createElement('div');
+      typing.className = 'chat-bubble bot typing';
+      typing.innerHTML = '<span class="bubble-label">rishabh-bot</span><span class="typing-dots"> </span>';
+      chatMsgs.appendChild(typing);
+      chatMsgs.scrollTop = chatMsgs.scrollHeight;
+      setTimeout(() => { chatMsgs.removeChild(typing); addBotBubble(text); }, 700);
+    } else {
+      addBotBubble(text);
     }
+  }
+
+  function addBotBubble(text) {
+    const el = document.createElement('div');
+    el.className = 'chat-bubble bot';
+    el.innerHTML = `<span class="bubble-label">rishabh-bot@portfolio</span>${text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')}`;
+    chatMsgs.appendChild(el);
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  }
+
+  function addUserBubble(text) {
+    const el = document.createElement('div');
+    el.className = 'chat-bubble user';
+    el.textContent = text;
+    chatMsgs.appendChild(el);
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  }
+
+  function setQuickReplies(list) {
+    quickReplies.innerHTML = '';
+    list.forEach(label => {
+      const btn = document.createElement('button');
+      btn.className = 'qr-btn';
+      btn.textContent = label;
+      btn.addEventListener('click', () => { handleChat(label); quickReplies.innerHTML = ''; });
+      quickReplies.appendChild(btn);
+    });
+  }
+
+  function handleChat(text) {
+    addUserBubble(text);
+    const match = RESPONSES.find(r => r.match.test(text));
+    if (match) {
+      botSay(match.reply);
+      if (match.after) match.after();
+    } else {
+      botSay("🤔 Not sure about that — try asking about experience, skills, education, achievements, or contact info!");
+    }
+    setTimeout(() => setQuickReplies(['💼 Experience', '⚙️ Skills', '🎓 Education', '📧 Contact', '🏅 Achievements']), 800);
+  }
+
+  function sendChat() {
+    const val = chatInput.value.trim();
+    if (!val) return;
+    chatInput.value = '';
+    quickReplies.innerHTML = '';
+    handleChat(val);
+  }
+
+  chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+  document.getElementById('chatSend').addEventListener('click', sendChat);
+
+  // Backtick shortcut (still works outside chat)
+  document.addEventListener('keydown', e => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+    if (e.key === '`' || e.key === '~') { e.preventDefault(); window.location.href = 'terminal.html'; }
   });
 })();

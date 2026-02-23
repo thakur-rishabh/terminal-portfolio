@@ -546,26 +546,43 @@
         </div>
     </footer>
 
-    <!-- Terminal Easter Egg Toast -->
-    <div id="terminal-toast" style="display:none;" role="alert" aria-live="polite">
-        <div class="toast-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot orange-dot"></span>
-            <span class="toast-title">hint.sh — new message</span>
-            <button class="toast-close" id="toastClose" aria-label="Dismiss">✕</button>
+    <!-- ═══ HACKER INTRUSION OVERLAY ═══ -->
+    <div id="hacker-overlay" aria-modal="true" role="dialog" aria-label="Portfolio chat" style="display:none;">
+        <canvas id="hackCanvas"></canvas>
+        <div class="hack-scanline"></div>
+
+        <!-- Phase 1: Hack terminal -->
+        <div id="hack-terminal" class="hack-window">
+            <div class="hack-win-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="hack-win-title">⚠ INTRUSION_DETECTED.sh</span>
+                <span class="hack-badge">ENCRYPTED</span>
+            </div>
+            <div id="hack-output" class="hack-body"></div>
+            <div id="hack-cta" class="hack-cta hidden">
+                <p class="hack-question">Want to chat about this portfolio?</p>
+                <div class="hack-cta-btns">
+                    <button id="hackYes" class="hack-btn-yes">[ YES ] ./start_chat.sh</button>
+                    <button id="hackNo" class="hack-btn-no">[ NO ] ./exit_now.sh</button>
+                </div>
+            </div>
         </div>
-        <div class="toast-body">
-            <p><span class="t-prompt">$</span> <span class="t-cmd">./detect_terminal_user.sh</span></p>
-            <span class="t-output">👀 Hey, do you love terminals?</span>
-            <span class="t-output">Try the <span class="t-hint">interactive shell</span> — explore</span>
-            <span class="t-output">this portfolio with real Linux commands!</span>
-            <span class="t-output" style="margin-top:0.3rem">Shortcut: press <span class="t-key">`</span> anywhere on
-                this page.</span>
-        </div>
-        <div class="toast-footer">
-            <a href="terminal.html" class="toast-btn-primary" id="toastOpen">./open_terminal.sh</a>
-            <button class="toast-btn-secondary" id="toastDismiss">maybe later</button>
+
+        <!-- Phase 2: Chat panel -->
+        <div id="hack-chat" class="hack-window hidden">
+            <div class="hack-win-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="hack-win-title">💬 secure_chat.sh — rishabh@portfolio</span>
+                <button id="hackChatClose" class="hack-chat-close" aria-label="Close chat">⏻ terminate</button>
+            </div>
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-quick-replies" id="quickReplies"></div>
+            <div class="chat-input-row">
+                <span class="chat-prompt">visitor@unknown:~$</span>
+                <input id="chatInput" type="text" autocomplete="off" spellcheck="false"
+                    placeholder="ask me anything..." />
+                <button id="chatSend" class="chat-send-btn">↵</button>
+            </div>
         </div>
     </div>
 
