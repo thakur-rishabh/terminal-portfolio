@@ -269,7 +269,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 // ── TERMINAL EASTER EGG: BACKTICK SHORTCUT & TOAST ──
 (function terminalEasterEgg() {
-  const TOAST_DELAY = 5000;   // show toast after 5s
+  const TOAST_DELAY = 1000;   // show toast after 1s
   const TOAST_AUTODISMISS = 12000; // auto-hide after 12s
   const toast = document.getElementById('terminal-toast');
   if (!toast) return;
