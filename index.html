@@ -546,6 +546,29 @@
         </div>
     </footer>
 
+    <!-- Terminal Easter Egg Toast -->
+    <div id="terminal-toast" style="display:none;" role="alert" aria-live="polite">
+        <div class="toast-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot orange-dot"></span>
+            <span class="toast-title">hint.sh — new message</span>
+            <button class="toast-close" id="toastClose" aria-label="Dismiss">✕</button>
+        </div>
+        <div class="toast-body">
+            <p><span class="t-prompt">$</span> <span class="t-cmd">./detect_terminal_user.sh</span></p>
+            <span class="t-output">👀 Hey, do you love terminals?</span>
+            <span class="t-output">Try the <span class="t-hint">interactive shell</span> — explore</span>
+            <span class="t-output">this portfolio with real Linux commands!</span>
+            <span class="t-output" style="margin-top:0.3rem">Shortcut: press <span class="t-key">`</span> anywhere on
+                this page.</span>
+        </div>
+        <div class="toast-footer">
+            <a href="terminal.html" class="toast-btn-primary" id="toastOpen">./open_terminal.sh</a>
+            <button class="toast-btn-secondary" id="toastDismiss">maybe later</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

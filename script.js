@@ -4,17 +4,17 @@
 
 // ── MATRIX RAIN ──────────────────────────────────
 (function initMatrix() {
-  const canvas  = document.getElementById('matrixCanvas');
-  const ctx     = canvas.getContext('2d');
-  const chars   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()[]{}|;:,.<>?terraform-aws-gcp-databricks-python-kubectl-docker-git-bash-ci-cd';
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()[]{}|;:,.<>?terraform-aws-gcp-databricks-python-kubectl-docker-git-bash-ci-cd';
   const fontSize = 13;
   let columns, drops;
 
   function resize() {
-    canvas.width  = canvas.offsetWidth;
+    canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     columns = Math.floor(canvas.width / fontSize);
-    drops   = Array.from({ length: columns }, () => Math.floor(Math.random() * -100));
+    drops = Array.from({ length: columns }, () => Math.floor(Math.random() * -100));
   }
 
   function draw() {
@@ -46,18 +46,18 @@
   let animId;
 
   function resize() {
-    canvas.width  = canvas.offsetWidth;
+    canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     createNodes();
   }
 
   function createNodes() {
     nodes = Array.from({ length: 30 }, () => ({
-      x:  Math.random() * canvas.width,
-      y:  Math.random() * canvas.height,
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.5,
       vy: (Math.random() - 0.5) * 0.5,
-      r:  Math.random() * 2.5 + 1,
+      r: Math.random() * 2.5 + 1,
     }));
   }
 
@@ -66,13 +66,13 @@
     // Connections
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
-        const dx   = nodes[i].x - nodes[j].x;
-        const dy   = nodes[i].y - nodes[j].y;
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 120) {
           const alpha = 1 - dist / 120;
           ctx.strokeStyle = `rgba(0, 255, 65, ${alpha * 0.6})`;
-          ctx.lineWidth   = 0.8;
+          ctx.lineWidth = 0.8;
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -88,7 +88,7 @@
       ctx.fill();
       n.x += n.vx;
       n.y += n.vy;
-      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+      if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
       if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
     });
     animId = requestAnimationFrame(draw);
@@ -110,7 +110,7 @@
     document.getElementById('bootLine6'),
     document.getElementById('bootLine7'),
   ];
-  const cta   = document.getElementById('heroCta');
+  const cta = document.getElementById('heroCta');
   const stats = document.getElementById('avatarStats');
 
   const delays = [0, 600, 1000, 1400, 1700, 2000, 2400];
@@ -122,13 +122,13 @@
     }, delays[i]);
   });
 
-  setTimeout(() => cta   && cta.classList.remove('hidden'),   3000);
+  setTimeout(() => cta && cta.classList.remove('hidden'), 3000);
   setTimeout(() => stats && stats.classList.remove('hidden'), 3200);
 })();
 
 // ── TYPEWRITER ROLE CYCLER ──────────────────────
 (function typewriterRole() {
-  const el    = document.getElementById('typedRole');
+  const el = document.getElementById('typedRole');
   if (!el) return;
   const roles = ['Software Engineer III', 'Cloud Infrastructure Engineer', 'Data Engineering Lead', 'Terraform Specialist', 'Databricks Platform Engineer'];
   let ri = 0, ci = 0, deleting = false;
@@ -171,8 +171,8 @@
 
 // ── ACTIVE NAV LINK ─────────────────────────────
 (function activeNav() {
-  const sections  = document.querySelectorAll('section[id]');
-  const navLinks  = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -190,7 +190,7 @@
 
 // ── MOBILE HAMBURGER ─────────────────────────────
 (function hamburger() {
-  const btn   = document.getElementById('hamburger');
+  const btn = document.getElementById('hamburger');
   const links = document.getElementById('navLinks');
   if (!btn || !links) return;
 
@@ -224,7 +224,7 @@
 // ── SKILL BARS ───────────────────────────────────
 (function skillBars() {
   const fills = document.querySelectorAll('.skill-bar-fill');
-  const obs   = new IntersectionObserver(entries => {
+  const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const fill = entry.target;
@@ -240,7 +240,7 @@
 // ── TIMELINE DOT ACTIVATE ON SCROLL ────────────
 (function timelineDots() {
   const items = document.querySelectorAll('.timeline-item');
-  const obs   = new IntersectionObserver(entries => {
+  const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const dot = entry.target.querySelector('.timeline-dot');
@@ -266,3 +266,45 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+// ── TERMINAL EASTER EGG: BACKTICK SHORTCUT & TOAST ──
+(function terminalEasterEgg() {
+  const TOAST_DELAY = 5000;   // show toast after 5s
+  const TOAST_AUTODISMISS = 12000; // auto-hide after 12s
+  const toast = document.getElementById('terminal-toast');
+  if (!toast) return;
+
+  let autoHideTimer;
+
+  function showToast() {
+    // Only show once per session
+    if (sessionStorage.getItem('termToastSeen')) return;
+    toast.style.display = 'block';
+    toast.classList.remove('toast-hide');
+    autoHideTimer = setTimeout(hideToast, TOAST_AUTODISMISS);
+  }
+
+  function hideToast() {
+    clearTimeout(autoHideTimer);
+    toast.classList.add('toast-hide');
+    sessionStorage.setItem('termToastSeen', '1');
+    setTimeout(() => { toast.style.display = 'none'; }, 450);
+  }
+
+  // Show after delay
+  setTimeout(showToast, TOAST_DELAY);
+
+  // Dismiss buttons
+  document.getElementById('toastClose')?.addEventListener('click', hideToast);
+  document.getElementById('toastDismiss')?.addEventListener('click', hideToast);
+
+  // ── BACKTICK GLOBAL SHORTCUT ──
+  document.addEventListener('keydown', e => {
+    // Ignore if user is typing in an input/textarea
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+    if (e.key === '`' || e.key === '~') {
+      e.preventDefault();
+      window.location.href = 'terminal.html';
+    }
+  });
+})();

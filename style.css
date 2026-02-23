@@ -968,3 +968,193 @@ img {
     flex-direction: column;
   }
 }
+
+/* ════════════════════════════════════
+   TERMINAL TOAST EASTER EGG
+════════════════════════════════════ */
+#terminal-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  width: 340px;
+  background: var(--surface);
+  border: 1px solid var(--orange);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.25), 0 8px 32px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  animation: toast-slide-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  font-family: var(--font-mono);
+}
+
+#terminal-toast.toast-hide {
+  animation: toast-slide-out 0.4s ease-in forwards;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+.toast-header .dot.orange-dot {
+  background: var(--orange);
+}
+
+.toast-title {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex: 1;
+  margin-left: 0.2rem;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.2rem;
+  transition: color var(--transition);
+}
+
+.toast-close:hover {
+  color: var(--orange);
+}
+
+.toast-body {
+  padding: 0.9rem 1rem 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.toast-body .t-prompt {
+  color: var(--green);
+}
+
+.toast-body .t-cmd {
+  color: var(--text);
+}
+
+.toast-body .t-output {
+  color: var(--text-muted);
+  display: block;
+  padding-left: 0.5rem;
+}
+
+.toast-body .t-hint {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.toast-body .t-key {
+  display: inline-block;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--orange);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--orange);
+}
+
+.toast-footer {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem 0.9rem;
+}
+
+.toast-btn-primary {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 107, 53, 0.15);
+  border: 1px solid var(--orange);
+  border-radius: var(--radius);
+  color: var(--orange);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+  text-decoration: none;
+}
+
+.toast-btn-primary:hover {
+  background: var(--orange);
+  color: var(--bg);
+  box-shadow: 0 0 14px rgba(255, 107, 53, 0.4);
+}
+
+.toast-btn-secondary {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.toast-btn-secondary:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+/* Shortcut hint tooltip on nav terminal button */
+.nav-terminal::after {
+  content: 'press ` to open';
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  color: var(--orange);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.nav-terminal {
+  position: relative;
+}
+
+.nav-terminal:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  #terminal-toast {
+    width: calc(100vw - 2rem);
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
