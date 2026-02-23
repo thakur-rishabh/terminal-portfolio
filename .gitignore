@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.npm
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build output (none for static site, but just in case)
+dist/
+build/
