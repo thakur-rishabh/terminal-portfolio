@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rishabh@portfolio:~$ — Interactive Terminal</title>
+    <meta name="description"
+        content="Interactive terminal for Rishabh Thakur's portfolio. Type Linux commands to explore." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ── Terminal Page Specific ── */
+        body {
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #term-page {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top bar */
+        #term-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            height: 52px;
+            background: rgba(13, 17, 23, 0.96);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .topbar-brand {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+        }
+
+        .topbar-hint {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .topbar-back {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding: 0.3rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .topbar-back:hover {
+            color: var(--green);
+            border-color: var(--green);
+            background: var(--green-glow);
+        }
+
+        /* Canvas bg */
+        #termBgCanvas {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        /* Terminal shell */
+        #terminal-shell {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        /* Output area */
+        #term-output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem 2rem 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            line-height: 1.75;
+            scroll-behavior: smooth;
+        }
+
+        #term-output::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #term-output::-webkit-scrollbar-thumb {
+            background: var(--green-dim);
+            border-radius: 2px;
+        }
+
+        /* Output lines */
+        .t-line {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .t-cmd {
+            color: var(--text);
+        }
+
+        .t-prompt {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .t-error {
+            color: #ff5f57;
+        }
+
+        .t-success {
+            color: var(--green);
+        }
+
+        .t-muted {
+            color: var(--text-muted);
+        }
+
+        .t-cyan {
+            color: var(--cyan);
+        }
+
+        .t-orange {
+            color: var(--orange);
+        }
+
+        .t-header {
+            color: var(--green);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .t-dim {
+            color: var(--text-dim);
+        }
+
+        .t-dir {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .t-file {
+            color: var(--text);
+        }
+
+        .t-exec {
+            color: var(--green);
+        }
+
+        .t-link {
+            color: var(--cyan);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .t-blank {
+            display: block;
+            height: 0.5rem;
+        }
+
+        .t-table {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 0 1rem;
+        }
+
+        .t-table-key {
+            color: var(--cyan);
+        }
+
+        .t-table-val {
+            color: var(--text-muted);
+        }
+
+        /* Input row */
+        #term-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem 1.25rem;
+            border-top: 1px solid var(--border);
+            background: rgba(13, 17, 23, 0.6);
+            flex-shrink: 0;
+        }
+
+        #term-prompt-label {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        #term-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text);
+            caret-color: var(--green);
+        }
+
+        #term-input::selection {
+            background: var(--green-glow);
+        }
+
+        /* Welcome ASCII */
+        .ascii-art {
+            color: var(--green);
+            font-size: 0.72rem;
+            line-height: 1.3;
+            white-space: pre;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            #term-output {
+                padding: 1rem 1rem 0.5rem;
+                font-size: 0.78rem;
+            }
+
+            #term-input-row {
+                padding: 0.6rem 1rem 1rem;
+            }
+
+            #term-input {
+                font-size: 0.78rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="term-page">
+        <canvas id="termBgCanvas"></canvas>
+
+        <!-- Top bar -->
+        <div id="term-topbar">
+            <div class="topbar-brand">
+                <span class="prompt-user">rishabh</span><span class="prompt-at">@</span><span
+                    class="prompt-host">portfolio</span><span class="prompt-colon">:</span><span
+                    class="prompt-path">~</span><span class="prompt-dollar">$</span>
+                <span class="nav-cursor">▋</span>
+            </div>
+            <span class="topbar-hint">Type <span class="t-success">help</span> to get started</span>
+            <a href="index.html" class="topbar-back">← ./portfolio</a>
+        </div>
+
+        <!-- Terminal shell -->
+        <div id="terminal-shell">
+            <div id="term-output"></div>
+            <div id="term-input-row">
+                <span id="term-prompt-label">
+                    <span class="prompt-user">rishabh</span><span class="prompt-at">@</span><span
+                        class="prompt-host">portfolio</span><span class="prompt-colon">:</span><span class="prompt-path"
+                        id="cwd-display">~</span><span class="prompt-dollar">$</span>
+                </span>
+                <input id="term-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
+                    spellcheck="false" autofocus placeholder="" />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ═══════════════════════════════════════════════
+           TERMINAL EMULATOR — Rishabh's Portfolio Shell
+           ═══════════════════════════════════════════════ */
+
+        // ── Matrix BG ─────────────────────────────────
+        (function () {
+            const canvas = document.getElementById('termBgCanvas');
+            const ctx = canvas.getContext('2d');
+            const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZterraform-aws-gcp-databricks-python-bash';
+            const fs = 13;
+            let cols, drops;
+            function resize() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                cols = Math.floor(canvas.width / fs);
+                drops = Array.from({ length: cols }, () => Math.floor(Math.random() * -50));
+            }
+            function draw() {
+                ctx.fillStyle = 'rgba(13,17,23,0.06)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = `${fs}px JetBrains Mono, monospace`;
+                drops.forEach((y, i) => {
+                    ctx.fillStyle = `rgba(0,255,65,${Math.random() > 0.95 ? 0.9 : 0.4})`;
+                    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fs, y * fs);
+                    if (y * fs > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                });
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            setInterval(draw, 40);
+        })();
+
+        // ── FILE SYSTEM ───────────────────────────────
+        const FS = {
+            '~': {
+                type: 'dir',
+                children: {
+                    'about.txt': { type: 'file' },
+                    'experience/': { type: 'dir' },
+                    'skills.txt': { type: 'file' },
+                    'education.txt': { type: 'file' },
+                    'contact.txt': { type: 'file' },
+                    'projects/': { type: 'dir' },
+                }
+            },
+            '~/experience': {
+                type: 'dir',
+                children: {
+                    'walmart.sh': { type: 'exec' },
+                    'bayer_ds.sh': { type: 'exec' },
+                    'bayer_intern.sh': { type: 'exec' },
+                    'volkswagen.sh': { type: 'exec' },
+                }
+            },
+            '~/projects': {
+                type: 'dir',
+                children: {
+                    'etl_pipeline.sh': { type: 'exec' },
+                    'grafana_dashboards.sh': { type: 'exec' },
+                    'ecs_infra.sh': { type: 'exec' },
+                }
+            }
+        };
+
+        const FILE_CONTENT = {
+            'about.txt': [
+                { cls: 't-header', txt: '━━━ ABOUT RISHABH THAKUR ━━━' },
+                { cls: 't-blank' },
+                { cls: 't-table-key', txt: 'Name:      ', val: 'Rishabh Thakur', vcls: 't-table-val' },
+                { cls: 't-table-key', txt: 'Title:     ', val: 'Software Engineer III', vcls: 't-table-val' },
+                { cls: 't-table-key', txt: 'Company:   ', val: 'Walmart, Inc.', vcls: 't-table-val' },
+                { cls: 't-table-key', txt: 'Location:  ', val: 'Denver, CO', vcls: 't-table-val' },
+                { cls: 't-table-key', txt: 'Experience:', val: '6+ years', vcls: 't-table-val' },
+                { cls: 't-blank' },
+                { cls: 't-muted', txt: 'Results-driven engineer specializing in cloud infrastructure,' },
+                { cls: 't-muted', txt: 'data engineering, and DevOps automation. Expert in Terraform,' },
+                { cls: 't-muted', txt: 'Databricks, AWS, GCP, Python, and CI/CD pipelines.' },
+            ],
+            'skills.txt': [
+                { cls: 't-header', txt: '━━━ SKILLS & TECHNOLOGIES ━━━' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '☁  Cloud Platforms' },
+                { cls: 't-muted', txt: '   AWS (EC2, S3, RDS, Lambda, Glue, ECS, SageMaker, CloudFormation, CloudWatch)' },
+                { cls: 't-muted', txt: '   GCP (BigQuery, Cloud Storage)' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '⚙  Infrastructure & IaC' },
+                { cls: 't-muted', txt: '   Terraform · Ansible · Docker · Kubernetes' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '📊 Data Engineering' },
+                { cls: 't-muted', txt: '   Databricks · Apache Spark · BigQuery · AWS Glue · Parquet · ETL' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '💻 Languages' },
+                { cls: 't-muted', txt: '   Python · SQL · Bash/Shell · R · JavaScript' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '🔁 CI/CD & DevOps' },
+                { cls: 't-muted', txt: '   GitHub Actions · Airflow · Jenkins · CloudWatch · Grafana' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '🔭 Observability' },
+                { cls: 't-muted', txt: '   Monte Carlo · ThoughtSpot · ELK Stack · Nagios' },
+            ],
+            'education.txt': [
+                { cls: 't-header', txt: '━━━ EDUCATION ━━━' },
+                { cls: 't-blank' },
+                { cls: 't-success', txt: '🎓 Master of Science in Computer Science' },
+                { cls: 't-muted', txt: '   University of Texas at Arlington, Arlington TX' },
+                { cls: 't-dim', txt: '   Jan 2022 – Dec 2023' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '🎓 Bachelor of Engineering in Computer Science' },
+                { cls: 't-muted', txt: '   Savitribai Phule Pune University, Pune India' },
+                { cls: 't-dim', txt: '   Aug 2014 – May 2018' },
+            ],
+            'contact.txt': [
+                { cls: 't-header', txt: '━━━ CONTACT INFO ━━━' },
+                { cls: 't-blank' },
+                { cls: 't-cyan', txt: '📧 Email:    ', val: 'rishabhprasadthakur@gmail.com', vcls: 't-muted' },
+                { cls: 't-cyan', txt: '📞 Phone:    ', val: '682-313-8425', vcls: 't-muted' },
+                { cls: 't-cyan', txt: '🔗 LinkedIn: ', val: 'linkedin.com/in/rishabhpthakur', vcls: 't-link', href: 'https://linkedin.com/in/rishabhpthakur' },
+                { cls: 't-cyan', txt: '🐙 GitHub:   ', val: 'github.com/thakur-rishabh', vcls: 't-link', href: 'https://github.com/thakur-rishabh' },
+            ],
+            'walmart.sh': [
+                { cls: 't-header', txt: '━━━ WALMART, INC. ━━━' },
+                { cls: 't-success', txt: 'Software Engineer III | Denver, CO | Feb 2025 – Present' },
+                { cls: 't-blank' },
+                { cls: 't-muted', txt: '▶ Cloud-based data infrastructure optimization (performance + cost)' },
+                { cls: 't-muted', txt: '▶ Terraform IaC for scalable cloud environments' },
+                { cls: 't-muted', txt: '▶ Databricks infrastructure for large-scale data processing' },
+                { cls: 't-muted', txt: '▶ Monte Carlo + ThoughtSpot for data observability' },
+                { cls: 't-muted', txt: '▶ Root cause analysis on infrastructure incidents' },
+                { cls: 't-muted', txt: '▶ CI/CD, infrastructure monitoring, pipeline automation' },
+                { cls: 't-blank' },
+                { cls: 't-dim', txt: 'Stack: Terraform · Databricks · Monte Carlo · ThoughtSpot · CI/CD' },
+            ],
+            'bayer_ds.sh': [
+                { cls: 't-header', txt: '━━━ BAYER R&D SERVICES — ASSOC. DATA SCIENTIST ━━━' },
+                { cls: 't-cyan', txt: 'Assoc. Data Scientist | Chesterfield, MO | Dec 2023 – Feb 2025' },
+                { cls: 't-blank' },
+                { cls: 't-muted', txt: '▶ ETL pipeline: AWS S3 → GCP BigQuery via Glue, Lambda, Step Functions' },
+                { cls: 't-orange', txt: '▶ 8% AWS cost reduction via RDS/S3/ECS optimization' },
+                { cls: 't-muted', txt: '▶ Interactive dashboards with Python (Plotly/Dash)' },
+                { cls: 't-orange', txt: '▶ 30% decision-making efficiency improvement' },
+                { cls: 't-muted', txt: '▶ CI/CD with GitHub Actions + CloudWatch monitoring' },
+                { cls: 't-orange', txt: '▶ 80% observability increase via Lambda + MS Teams alerts' },
+                { cls: 't-muted', txt: '▶ AWS ECS deployed R and Python applications' },
+                { cls: 't-blank' },
+                { cls: 't-dim', txt: 'Stack: AWS Glue · Lambda · BigQuery · Plotly · GitHub Actions · ECS' },
+            ],
+            'bayer_intern.sh': [
+                { cls: 't-header', txt: '━━━ BAYER R&D SERVICES — CLOUD ENGINEER INTERN ━━━' },
+                { cls: 't-cyan', txt: 'Cloud Engineer Intern | Arlington, TX | May 2023 – Oct 2023' },
+                { cls: 't-blank' },
+                { cls: 't-orange', txt: '▶ 23.4% operational cost reduction — auto-deleted idle SageMaker instances' },
+                { cls: 't-muted', txt: '▶ Grafana dashboards for AWS + on-prem resource monitoring' },
+                { cls: 't-orange', txt: '▶ 15% cost savings via preventive maintenance insights' },
+                { cls: 't-muted', txt: '▶ Airflow OAuth integration — reduced manual onboarding by 15%' },
+                { cls: 't-blank' },
+                { cls: 't-dim', txt: 'Stack: AWS SageMaker · Grafana · Airflow · OAuth · IAM' },
+            ],
+            'volkswagen.sh': [
+                { cls: 't-header', txt: '━━━ VOLKSWAGEN GROUP TECHNOLOGY SOLUTIONS ━━━' },
+                { cls: 't-cyan', txt: 'Software Engineer | Pune, India | Nov 2018 – Jan 2022' },
+                { cls: 't-blank' },
+                { cls: 't-orange', txt: '▶ 20% decrease in AEM load times via root cause analysis' },
+                { cls: 't-muted', txt: '▶ Automated CI/CD pipelines with Ansible for big data workflows' },
+                { cls: 't-muted', txt: '▶ Migrated OpenStack HeatTemplate → AWS CloudFormation' },
+                { cls: 't-muted', txt: '▶ Nagios + Python scripts for distributed systems monitoring' },
+                { cls: 't-muted', txt: '▶ ELK stack POC for AEM application observability' },
+                { cls: 't-blank' },
+                { cls: 't-dim', txt: 'Stack: AEM · Ansible · AWS CloudFormation · Nagios · ELK Stack' },
+            ],
+        };
+
+        // ── TERMINAL STATE ───────────────────────────
+        let cwd = '~';
+        const history = [];
+        let histIdx = -1;
+
+        const output = document.getElementById('term-output');
+        const input = document.getElementById('term-input');
+        const cwdLabel = document.getElementById('cwd-display');
+
+        // ── PRINT HELPERS ─────────────────────────────
+        function println(text = '', cls = 't-line t-muted') {
+            const el = document.createElement('div');
+            el.className = 't-line ' + cls;
+            el.textContent = text;
+            output.appendChild(el);
+        }
+
+        function printHTML(html, cls = 't-line') {
+            const el = document.createElement('div');
+            el.className = 't-line ' + cls;
+            el.innerHTML = html;
+            output.appendChild(el);
+        }
+
+        function printBlank() {
+            const el = document.createElement('div');
+            el.className = 't-blank';
+            output.appendChild(el);
+        }
+
+        function printPromptLine(cmd) {
+            const cwd_str = cwd;
+            printHTML(
+                `<span class="t-prompt">rishabh@portfolio</span><span style="color:var(--text-muted)">:</span><span style="color:var(--orange)">${cwd_str}</span><span style="color:var(--text-muted)">$</span> <span class="t-cmd">${escHtml(cmd)}</span>`,
+                't-line'
+            );
+        }
+
+        function escHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function scrollBottom() {
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function printFileContent(key) {
+            const content = FILE_CONTENT[key];
+            if (!content) { println(`cat: ${key}: No such file`, 't-line t-error'); return; }
+            printBlank();
+            content.forEach(line => {
+                if (line.cls === 't-blank') { printBlank(); return; }
+                if (line.val) {
+                    if (line.href) {
+                        printHTML(`<span class="${line.cls}">${escHtml(line.txt)}</span><a class="${line.vcls}" href="${line.href}" target="_blank">${escHtml(line.val)}</a>`);
+                    } else {
+                        printHTML(`<span class="${line.cls}">${escHtml(line.txt)}</span><span class="${line.vcls}">${escHtml(line.val)}</span>`);
+                    }
+                } else {
+                    println(line.txt, 't-line ' + line.cls);
+                }
+            });
+            printBlank();
+        }
+
+        // ── COMMANDS ─────────────────────────────────
+        const COMMANDS = {
+
+            help(args) {
+                printBlank();
+                println('╔══════════════════════════════════════════════════════╗', 't-line t-success');
+                println('║        RISHABH\'S PORTFOLIO SHELL — HELP              ║', 't-line t-success');
+                println('╚══════════════════════════════════════════════════════╝', 't-line t-success');
+                printBlank();
+                println('NAVIGATION', 't-line t-header');
+                const nav = [
+                    ['ls', 'List files in current directory'],
+                    ['ls -la', 'List files with details'],
+                    ['cd <dir>', 'Change directory (experience, projects, ~)'],
+                    ['cd ..', 'Go up one directory'],
+                    ['pwd', 'Print current directory'],
+                ];
+                nav.forEach(([cmd, desc]) => {
+                    printHTML(`  <span class="t-exec" style="display:inline-block;width:220px">${escHtml(cmd)}</span><span class="t-muted">${escHtml(desc)}</span>`);
+                });
+                printBlank();
+                println('FILE COMMANDS', 't-line t-header');
+                const files = [
+                    ['cat <file>', 'Display file contents'],
+                    ['cat about.txt', 'Show about info'],
+                    ['cat skills.txt', 'Show skills & stack'],
+                    ['cat education.txt', 'Show education history'],
+                    ['cat contact.txt', 'Show contact details'],
+                    ['cat experience/', 'List all experience files'],
+                ];
+                files.forEach(([cmd, desc]) => {
+                    printHTML(`  <span class="t-exec" style="display:inline-block;width:220px">${escHtml(cmd)}</span><span class="t-muted">${escHtml(desc)}</span>`);
+                });
+                printBlank();
+                println('SYSTEM COMMANDS', 't-line t-header');
+                const sys = [
+                    ['whoami', 'Who is Rishabh?'],
+                    ['uname -a', 'System / stack info'],
+                    ['echo <text>', 'Print text to terminal'],
+                    ['date', 'Show current date & time'],
+                    ['history', 'Show command history'],
+                    ['clear', 'Clear the terminal'],
+                    ['open portfolio', 'Open the main portfolio site'],
+                    ['exit', 'Return to portfolio'],
+                ];
+                sys.forEach(([cmd, desc]) => {
+                    printHTML(`  <span class="t-exec" style="display:inline-block;width:220px">${escHtml(cmd)}</span><span class="t-muted">${escHtml(desc)}</span>`);
+                });
+                printBlank();
+                println('TIP: Use ↑/↓ arrow keys to navigate command history.', 't-line t-dim');
+                printBlank();
+            },
+
+            ls(args) {
+                const longFlag = args.includes('-la') || args.includes('-l') || args.includes('-a');
+                const node = FS[cwd === '~' ? '~' : `~/${cwd.replace('~/', '')}`] || FS['~'];
+                const items = Object.entries(node.children || {});
+                printBlank();
+                if (longFlag) {
+                    println('total ' + items.length, 't-line t-dim');
+                    items.forEach(([name, info]) => {
+                        const isDir = info.type === 'dir';
+                        const isExec = info.type === 'exec';
+                        const perm = isDir ? 'drwxr-xr-x' : (isExec ? '-rwxr-xr-x' : '-rw-r--r--');
+                        const cls = isDir ? 't-dir' : (isExec ? 't-exec' : 't-file');
+                        printHTML(`<span class="t-dim">${perm}  1 rishabh staff  ${String(Math.floor(Math.random() * 4096 + 256)).padStart(5)}  </span><span class="${cls}">${escHtml(name)}</span>`);
+                    });
+                } else {
+                    const line = items.map(([name, info]) => {
+                        const cls = info.type === 'dir' ? 't-dir' : (info.type === 'exec' ? 't-exec' : 't-file');
+                        return `<span class="${cls}" style="margin-right:1.5rem">${escHtml(name)}</span>`;
+                    }).join('');
+                    printHTML(line);
+                }
+                printBlank();
+            },
+
+            cd(args) {
+                const target = args[0] || '~';
+                if (target === '~' || target === '') { cwd = '~'; }
+                else if (target === '..') {
+                    cwd = '~';
+                } else {
+                    const candidate = `~/${target.replace('~/', '')}`;
+                    if (FS[candidate]) {
+                        cwd = candidate;
+                    } else {
+                        println(`cd: ${target}: No such directory`, 't-line t-error');
+                        return;
+                    }
+                }
+                cwdLabel.textContent = cwd;
+            },
+
+            cat(args) {
+                if (!args[0]) { println('cat: missing file operand', 't-line t-error'); return; }
+                const fname = args[0].replace(/\/$/, '');
+                // look inside current dir
+                const node = FS[cwd === '~' ? '~' : `~/${cwd.replace('~/', '')}`] || FS['~'];
+                if (node.children && node.children[fname + '/']) {
+                    // it's a dir, list its contents
+                    println(`cat: ${fname}: Is a directory — use 'ls' or 'cd ${fname}'`, 't-line t-error');
+                    return;
+                }
+                // find file
+                if (FILE_CONTENT[fname]) {
+                    printFileContent(fname);
+                } else {
+                    println(`cat: ${fname}: No such file`, 't-line t-error');
+                }
+            },
+
+            pwd() {
+                println(cwd === '~' ? '/home/rishabh' : `/home/rishabh/${cwd.replace('~/', '')}`, 't-line t-success');
+            },
+
+            whoami() {
+                printBlank();
+                println('rishabh thakur', 't-line t-success');
+                println('Software Engineer III @ Walmart · Cloud & Data Engineering', 't-line t-muted');
+                println('Denver, CO · rishabhprasadthakur@gmail.com', 't-line t-muted');
+                printBlank();
+            },
+
+            'uname'(args) {
+                if (args.includes('-a') || args.length === 0) {
+                    println('portfolio-os rishabh 6.0.0-cloud #TERRAFORM SMP Fri Feb 2025 Denver,CO AWS/GCP/Databricks x86_64 GNU/Bash', 't-line t-success');
+                } else {
+                    println('portfolio-os', 't-line t-success');
+                }
+            },
+
+            echo(args) {
+                println(args.join(' '), 't-line t-text');
+            },
+
+            date() {
+                println(new Date().toString(), 't-line t-success');
+            },
+
+            history() {
+                printBlank();
+                history.forEach((cmd, i) => {
+                    printHTML(`  <span class="t-dim">${String(i + 1).padStart(4)}  </span><span class="t-muted">${escHtml(cmd)}</span>`);
+                });
+                printBlank();
+            },
+
+            clear() {
+                output.innerHTML = '';
+            },
+
+            'open'(args) {
+                if ((args[0] || '').toLowerCase() === 'portfolio') {
+                    println('Opening portfolio…', 't-line t-success');
+                    setTimeout(() => { window.location.href = 'index.html'; }, 600);
+                } else {
+                    println(`open: ${args[0] || ''}: Not found`, 't-line t-error');
+                }
+            },
+
+            exit() {
+                println('Goodbye! Redirecting to portfolio…', 't-line t-success');
+                setTimeout(() => { window.location.href = 'index.html'; }, 800);
+            },
+        };
+
+        // ── PROCESS COMMAND ───────────────────────────
+        function processCommand(raw) {
+            const trimmed = raw.trim();
+            if (!trimmed) return;
+
+            history.push(trimmed);
+            histIdx = history.length;
+
+            printPromptLine(trimmed);
+
+            const parts = trimmed.split(/\s+/);
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            if (COMMANDS[cmd]) {
+                COMMANDS[cmd](args);
+            } else {
+                println(`${trimmed}: command not found. Type 'help' for available commands.`, 't-line t-error');
+            }
+
+            scrollBottom();
+        }
+
+        // ── INPUT HANDLING ────────────────────────────
+        input.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                processCommand(input.value);
+                input.value = '';
+                histIdx = history.length;
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (histIdx > 0) { histIdx--; input.value = history[histIdx]; }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (histIdx < history.length - 1) { histIdx++; input.value = history[histIdx]; }
+                else { histIdx = history.length; input.value = ''; }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                // basic tab complete
+                const val = input.value.trim();
+                const parts = val.split(/\s+/);
+                if (parts.length >= 2) {
+                    const prefix = parts[parts.length - 1];
+                    const node = FS[cwd === '~' ? '~' : `~/${cwd.replace('~/', '')}`] || FS['~'];
+                    const matches = Object.keys(node.children || {}).filter(k => k.startsWith(prefix));
+                    if (matches.length === 1) {
+                        parts[parts.length - 1] = matches[0];
+                        input.value = parts.join(' ');
+                    }
+                }
+            }
+        });
+
+        // Click anywhere on terminal to focus input
+        document.getElementById('terminal-shell').addEventListener('click', () => input.focus());
+
+        // ── WELCOME MESSAGE ───────────────────────────
+        function showWelcome() {
+            printHTML(`<div class="ascii-art">
+ ██████╗ ██╗███████╗██╗  ██╗ █████╗ ██████╗ ██╗  ██╗
+ ██╔══██╗██║██╔════╝██║  ██║██╔══██╗██╔══██╗██║  ██║
+ ██████╔╝██║███████╗███████║███████║██████╔╝███████║
+ ██╔══██╗██║╚════██║██╔══██║██╔══██║██╔══██╗██╔══██║
+ ██║  ██║██║███████║██║  ██║██║  ██║██████╔╝██║  ██║
+ ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝</div>`);
+            println("Welcome to Rishabh's Portfolio Shell v2.0.25", 't-line t-success');
+            println("Type 'help' to see all commands, or start exploring:", 't-line t-muted');
+            printBlank();
+            printHTML(`  <span class="t-dim">Quick start →</span> <span class="t-exec">ls</span> <span class="t-dim">·</span> <span class="t-exec">cat about.txt</span> <span class="t-dim">·</span> <span class="t-exec">cd experience</span> <span class="t-dim">·</span> <span class="t-exec">cat walmart.sh</span>`);
+            printBlank();
+            println('─'.repeat(56), 't-line t-dim');
+            printBlank();
+            scrollBottom();
+        }
+
+        showWelcome();
+        input.focus();
+    </script>
+</body>
+
+</html>

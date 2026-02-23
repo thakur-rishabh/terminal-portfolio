@@ -1,419 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rishabh Thakur | Cloud Engineer & Software Engineer III</title>
-  <meta name="description" content="Portfolio of Rishabh Thakur — Software Engineer III at Walmart, specializing in cloud infrastructure, data engineering, Terraform, Databricks, AWS, and GCP." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rishabh Thakur | Cloud Engineer & Software Engineer III</title>
+    <meta name="description"
+        content="Portfolio of Rishabh Thakur — Software Engineer III at Walmart, specializing in cloud infrastructure, data engineering, Terraform, Databricks, AWS, and GCP." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <!-- ═══ NAVBAR ═══ -->
-  <nav id="navbar">
-    <div class="nav-container">
-      <div class="nav-brand">
-        <span class="prompt-user">rishabh</span><span class="prompt-at">@</span><span class="prompt-host">portfolio</span><span class="prompt-colon">:</span><span class="prompt-path">~</span><span class="prompt-dollar">$</span>
-        <span class="nav-cursor">▋</span>
-      </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about" class="nav-link">/about</a></li>
-        <li><a href="#experience" class="nav-link">/experience</a></li>
-        <li><a href="#skills" class="nav-link">/skills</a></li>
-        <li><a href="#education" class="nav-link">/education</a></li>
-        <li><a href="#contact" class="nav-link">/contact</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- ═══ HERO ═══ -->
-  <section id="hero">
-    <canvas id="matrixCanvas"></canvas>
-    <div class="scanlines"></div>
-    <div class="hero-content">
-      <div class="terminal-header">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="terminal-title">boot.sh — rishabh@portfolio</span>
-      </div>
-      <div class="terminal-body">
-        <div class="boot-line" id="bootLine1"><span class="prompt">$</span> <span class="cmd">./init_portfolio.sh</span></div>
-        <div class="boot-line hidden" id="bootLine2"><span class="comment">## Loading profile...</span></div>
-        <div class="boot-line hidden" id="bootLine3"><span class="key">NAME</span><span class="eq">=</span><span class="val">"Rishabh Thakur"</span></div>
-        <div class="boot-line hidden" id="bootLine4"><span class="key">ROLE</span><span class="eq">=</span><span class="val" id="typedRole">"Software Engineer III"</span></div>
-        <div class="boot-line hidden" id="bootLine5"><span class="key">LOCATION</span><span class="eq">=</span><span class="val">"Denver, CO"</span></div>
-        <div class="boot-line hidden" id="bootLine6"><span class="key">COMPANY</span><span class="eq">=</span><span class="val">"Walmart, Inc."</span></div>
-        <div class="boot-line hidden" id="bootLine7"><span class="key">STATUS</span><span class="eq">=</span><span class="val-green">"ACTIVE"</span> <span class="caret blink">▋</span></div>
-        <div class="hero-cta hidden" id="heroCta">
-          <a href="#experience" class="btn-primary" id="btnExperience">./view_experience.sh</a>
-          <a href="#contact" class="btn-secondary" id="btnContact">./contact_me.sh</a>
+    <!-- ═══ NAVBAR ═══ -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="prompt-user">rishabh</span><span class="prompt-at">@</span><span
+                    class="prompt-host">portfolio</span><span class="prompt-colon">:</span><span
+                    class="prompt-path">~</span><span class="prompt-dollar">$</span>
+                <span class="nav-cursor">▋</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" class="nav-link">/about</a></li>
+                <li><a href="#experience" class="nav-link">/experience</a></li>
+                <li><a href="#skills" class="nav-link">/skills</a></li>
+                <li><a href="#education" class="nav-link">/education</a></li>
+                <li><a href="#contact" class="nav-link">/contact</a></li>
+                <li><a href="terminal.html" class="nav-link nav-terminal" id="navTerminalBtn">⌨ terminal</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-      </div>
-    </div>
-    <div class="hero-avatar">
-      <div class="avatar-ring">
-        <img src="assets/avatar.png" alt="Rishabh Thakur" id="avatarImg" />
-      </div>
-      <div class="avatar-stats hidden" id="avatarStats">
-        <div class="stat"><span class="stat-num">6+</span><span class="stat-label">Years Exp</span></div>
-        <div class="stat"><span class="stat-num">4</span><span class="stat-label">Companies</span></div>
-        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Cloud Platforms</span></div>
-      </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- ═══ ABOUT ═══ -->
-  <section id="about" class="section">
-    <div class="container">
-      <h2 class="section-title"><span class="cmd-prefix">$ cat</span> about.txt</h2>
-      <div class="terminal-window fade-in">
-        <div class="terminal-header">
-          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-          <span class="terminal-title">about.txt</span>
-        </div>
-        <div class="terminal-body about-body">
-          <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">whoami</span></p>
-          <p class="output">Software Engineer III | Cloud & Data Engineering</p>
-          <br/>
-          <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">cat bio.txt</span></p>
-          <p class="output">Hi! I'm Rishabh Thakur — a results-driven engineer with 6+ years of
-experience building scalable <span class="highlight-green">cloud infrastructure</span>, automating
-<span class="highlight-cyan">CI/CD pipelines</span>, and designing <span class="highlight-orange">data engineering</span> platforms.
-I specialize in Terraform, Databricks, AWS, and GCP ecosystems,
-delivering cost-optimized, observable, and resilient platforms
-that power data-driven decisions at scale.</p>
-          <br/>
-          <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">echo $SKILLS_SUMMARY</span></p>
-          <p class="output">Terraform · Databricks · AWS · GCP · Python · Spark · CI/CD · Docker · ECS · BigQuery</p>
-          <br/>
-          <p><span class="prompt-inline">root@cloud:~$</span> <span class="caret blink">▋</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ EXPERIENCE ═══ -->
-  <section id="experience" class="section">
-    <div class="container">
-      <h2 class="section-title"><span class="cmd-prefix">$ git log</span> --oneline --experience</h2>
-      <div class="timeline">
-
-        <!-- Walmart -->
-        <div class="timeline-item fade-in" id="exp-walmart">
-          <div class="timeline-connector">
-            <div class="timeline-dot active"></div>
-            <div class="timeline-line"></div>
-          </div>
-          <div class="exp-card terminal-window">
+    <!-- ═══ HERO ═══ -->
+    <section id="hero">
+        <canvas id="matrixCanvas"></canvas>
+        <div class="scanlines"></div>
+        <div class="hero-content">
             <div class="terminal-header">
-              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-              <span class="terminal-title">walmart_inc.sh</span>
-              <span class="exp-date">Feb 2025 – Present</span>
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="terminal-title">boot.sh — rishabh@portfolio</span>
             </div>
             <div class="terminal-body">
-              <p class="exp-title"><span class="prompt-inline">$</span> <span class="highlight-green">Software Engineer III</span> <span class="exp-company">@ Walmart, Inc. — Denver, CO</span></p>
-              <ul class="exp-list">
-                <li><span class="arrow">▶</span> Analyze and optimize cloud-based data infrastructure for performance efficiency and cost reduction</li>
-                <li><span class="arrow">▶</span> Lead cloud automation efforts using <span class="tag">Terraform</span> for scalable, cost-efficient IaC</li>
-                <li><span class="arrow">▶</span> Design and maintain <span class="tag">Databricks</span> infrastructure for large-scale data processing</li>
-                <li><span class="arrow">▶</span> Leverage <span class="tag">Monte Carlo</span> and <span class="tag">ThoughtSpot</span> for data observability and pipeline health</li>
-                <li><span class="arrow">▶</span> Perform root cause analyses on data infrastructure incidents with long-term solutions</li>
-                <li><span class="arrow">▶</span> Collaborate on CI/CD implementation, infrastructure monitoring, and data pipeline automation</li>
-              </ul>
-              <div class="tech-tags">
-                <span class="tech-tag">Terraform</span>
-                <span class="tech-tag">Databricks</span>
-                <span class="tech-tag">Monte Carlo</span>
-                <span class="tech-tag">ThoughtSpot</span>
-                <span class="tech-tag">CI/CD</span>
-              </div>
+                <div class="boot-line" id="bootLine1"><span class="prompt">$</span> <span
+                        class="cmd">./init_portfolio.sh</span></div>
+                <div class="boot-line hidden" id="bootLine2"><span class="comment">## Loading profile...</span></div>
+                <div class="boot-line hidden" id="bootLine3"><span class="key">NAME</span><span class="eq">=</span><span
+                        class="val">"Rishabh Thakur"</span></div>
+                <div class="boot-line hidden" id="bootLine4"><span class="key">ROLE</span><span class="eq">=</span><span
+                        class="val" id="typedRole">"Software Engineer III"</span></div>
+                <div class="boot-line hidden" id="bootLine5"><span class="key">LOCATION</span><span
+                        class="eq">=</span><span class="val">"Denver, CO"</span></div>
+                <div class="boot-line hidden" id="bootLine6"><span class="key">COMPANY</span><span
+                        class="eq">=</span><span class="val">"Walmart, Inc."</span></div>
+                <div class="boot-line hidden" id="bootLine7"><span class="key">STATUS</span><span
+                        class="eq">=</span><span class="val-green">"ACTIVE"</span> <span class="caret blink">▋</span>
+                </div>
+                <div class="hero-cta hidden" id="heroCta">
+                    <a href="#experience" class="btn-primary" id="btnExperience">./view_experience.sh</a>
+                    <a href="#contact" class="btn-secondary" id="btnContact">./contact_me.sh</a>
+                </div>
             </div>
-          </div>
         </div>
-
-        <!-- Bayer DS -->
-        <div class="timeline-item fade-in" id="exp-bayer-ds">
-          <div class="timeline-connector">
-            <div class="timeline-dot"></div>
-            <div class="timeline-line"></div>
-          </div>
-          <div class="exp-card terminal-window">
-            <div class="terminal-header">
-              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-              <span class="terminal-title">bayer_data_scientist.sh</span>
-              <span class="exp-date">Dec 2023 – Feb 2025</span>
+        <div class="hero-avatar">
+            <div class="avatar-ring">
+                <img src="assets/avatar.png" alt="Rishabh Thakur" id="avatarImg" />
             </div>
-            <div class="terminal-body">
-              <p class="exp-title"><span class="prompt-inline">$</span> <span class="highlight-cyan">Assoc. Data Scientist</span> <span class="exp-company">@ Bayer R&D Services — Chesterfield, MO</span></p>
-              <ul class="exp-list">
-                <li><span class="arrow">▶</span> Built ETL pipeline from <span class="tag">AWS S3</span> → <span class="tag">GCP BigQuery</span> using Glue, Lambda, Step Functions; CSV→Parquet reducing storage costs</li>
-                <li><span class="arrow">▶</span> Achieved <span class="highlight-orange">8% AWS cost reduction</span> via RDS, S3, ECS optimization and right-sizing</li>
-                <li><span class="arrow">▶</span> Built interactive dashboards with <span class="tag">Python (Plotly/Dash)</span> — real-time anomaly detection & KPI tracking; <span class="highlight-orange">30% efficiency gain</span></li>
-                <li><span class="arrow">▶</span> Developed CI/CD workflows with <span class="tag">GitHub Actions</span> + CloudWatch; <span class="highlight-orange">30% faster incident response</span></li>
-                <li><span class="arrow">▶</span> Increased observability by <span class="highlight-orange">80%</span> via AWS Lambda monitoring ECS tasks with MS Teams alerts</li>
-                <li><span class="arrow">▶</span> Deployed R and Python apps on <span class="tag">AWS ECS</span> with GitHub Actions automation</li>
-              </ul>
-              <div class="tech-tags">
-                <span class="tech-tag">AWS Glue</span>
-                <span class="tech-tag">Lambda</span>
-                <span class="tech-tag">BigQuery</span>
-                <span class="tech-tag">Plotly</span>
-                <span class="tech-tag">GitHub Actions</span>
-                <span class="tech-tag">ECS</span>
-              </div>
+            <div class="avatar-stats hidden" id="avatarStats">
+                <div class="stat"><span class="stat-num">6+</span><span class="stat-label">Years Exp</span></div>
+                <div class="stat"><span class="stat-num">4</span><span class="stat-label">Companies</span></div>
+                <div class="stat"><span class="stat-num">3</span><span class="stat-label">Cloud Platforms</span></div>
             </div>
-          </div>
         </div>
+    </section>
 
-        <!-- Bayer Intern -->
-        <div class="timeline-item fade-in" id="exp-bayer-intern">
-          <div class="timeline-connector">
-            <div class="timeline-dot"></div>
-            <div class="timeline-line"></div>
-          </div>
-          <div class="exp-card terminal-window">
-            <div class="terminal-header">
-              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-              <span class="terminal-title">bayer_intern.sh</span>
-              <span class="exp-date">May 2023 – Oct 2023</span>
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title"><span class="cmd-prefix">$ cat</span> about.txt</h2>
+            <div class="terminal-window fade-in">
+                <div class="terminal-header">
+                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                    <span class="terminal-title">about.txt</span>
+                </div>
+                <div class="terminal-body about-body">
+                    <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">whoami</span></p>
+                    <p class="output">Software Engineer III | Cloud & Data Engineering</p>
+                    <br />
+                    <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">cat bio.txt</span></p>
+                    <p class="output">Hi! I'm Rishabh Thakur — a results-driven engineer with 6+ years of
+                        experience building scalable <span class="highlight-green">cloud infrastructure</span>,
+                        automating
+                        <span class="highlight-cyan">CI/CD pipelines</span>, and designing <span
+                            class="highlight-orange">data engineering</span> platforms.
+                        I specialize in Terraform, Databricks, AWS, and GCP ecosystems,
+                        delivering cost-optimized, observable, and resilient platforms
+                        that power data-driven decisions at scale.
+                    </p>
+                    <br />
+                    <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">echo $SKILLS_SUMMARY</span>
+                    </p>
+                    <p class="output">Terraform · Databricks · AWS · GCP · Python · Spark · CI/CD · Docker · ECS ·
+                        BigQuery</p>
+                    <br />
+                    <p><span class="prompt-inline">root@cloud:~$</span> <span class="caret blink">▋</span></p>
+                </div>
             </div>
-            <div class="terminal-body">
-              <p class="exp-title"><span class="prompt-inline">$</span> <span class="highlight-cyan">Cloud Engineer Intern</span> <span class="exp-company">@ Bayer R&D Services — Arlington, TX</span></p>
-              <ul class="exp-list">
-                <li><span class="arrow">▶</span> Achieved <span class="highlight-orange">23.4% cut in operational costs</span> by automating deletion of idle AWS SageMaker Studio and RStudio instances</li>
-                <li><span class="arrow">▶</span> Developed <span class="tag">Grafana</span> dashboards for AWS and on-prem monitoring; enabled <span class="highlight-orange">15% cost reduction</span></li>
-                <li><span class="arrow">▶</span> Implemented <span class="tag">Airflow OAuth</span> login integration — reduced manual onboarding by 15%</li>
-              </ul>
-              <div class="tech-tags">
-                <span class="tech-tag">AWS SageMaker</span>
-                <span class="tech-tag">Grafana</span>
-                <span class="tech-tag">Airflow</span>
-                <span class="tech-tag">OAuth</span>
-              </div>
+        </div>
+    </section>
+
+    <!-- ═══ EXPERIENCE ═══ -->
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title"><span class="cmd-prefix">$ git log</span> --oneline --experience</h2>
+            <div class="timeline">
+
+                <!-- Walmart -->
+                <div class="timeline-item fade-in" id="exp-walmart">
+                    <div class="timeline-connector">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="exp-card terminal-window">
+                        <div class="terminal-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="terminal-title">walmart_inc.sh</span>
+                            <span class="exp-date">Feb 2025 – Present</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="exp-title"><span class="prompt-inline">$</span> <span
+                                    class="highlight-green">Software Engineer III</span> <span class="exp-company">@
+                                    Walmart, Inc. — Denver, CO</span></p>
+                            <ul class="exp-list">
+                                <li><span class="arrow">▶</span> Analyze and optimize cloud-based data infrastructure
+                                    for performance efficiency and cost reduction</li>
+                                <li><span class="arrow">▶</span> Lead cloud automation efforts using <span
+                                        class="tag">Terraform</span> for scalable, cost-efficient IaC</li>
+                                <li><span class="arrow">▶</span> Design and maintain <span class="tag">Databricks</span>
+                                    infrastructure for large-scale data processing</li>
+                                <li><span class="arrow">▶</span> Leverage <span class="tag">Monte Carlo</span> and <span
+                                        class="tag">ThoughtSpot</span> for data observability and pipeline health</li>
+                                <li><span class="arrow">▶</span> Perform root cause analyses on data infrastructure
+                                    incidents with long-term solutions</li>
+                                <li><span class="arrow">▶</span> Collaborate on CI/CD implementation, infrastructure
+                                    monitoring, and data pipeline automation</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Terraform</span>
+                                <span class="tech-tag">Databricks</span>
+                                <span class="tech-tag">Monte Carlo</span>
+                                <span class="tech-tag">ThoughtSpot</span>
+                                <span class="tech-tag">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bayer DS -->
+                <div class="timeline-item fade-in" id="exp-bayer-ds">
+                    <div class="timeline-connector">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="exp-card terminal-window">
+                        <div class="terminal-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="terminal-title">bayer_data_scientist.sh</span>
+                            <span class="exp-date">Dec 2023 – Feb 2025</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="exp-title"><span class="prompt-inline">$</span> <span
+                                    class="highlight-cyan">Assoc. Data Scientist</span> <span class="exp-company">@
+                                    Bayer R&D Services — Chesterfield, MO</span></p>
+                            <ul class="exp-list">
+                                <li><span class="arrow">▶</span> Built ETL pipeline from <span class="tag">AWS S3</span>
+                                    → <span class="tag">GCP BigQuery</span> using Glue, Lambda, Step Functions;
+                                    CSV→Parquet reducing storage costs</li>
+                                <li><span class="arrow">▶</span> Achieved <span class="highlight-orange">8% AWS cost
+                                        reduction</span> via RDS, S3, ECS optimization and right-sizing</li>
+                                <li><span class="arrow">▶</span> Built interactive dashboards with <span
+                                        class="tag">Python (Plotly/Dash)</span> — real-time anomaly detection & KPI
+                                    tracking; <span class="highlight-orange">30% efficiency gain</span></li>
+                                <li><span class="arrow">▶</span> Developed CI/CD workflows with <span class="tag">GitHub
+                                        Actions</span> + CloudWatch; <span class="highlight-orange">30% faster incident
+                                        response</span></li>
+                                <li><span class="arrow">▶</span> Increased observability by <span
+                                        class="highlight-orange">80%</span> via AWS Lambda monitoring ECS tasks with MS
+                                    Teams alerts</li>
+                                <li><span class="arrow">▶</span> Deployed R and Python apps on <span class="tag">AWS
+                                        ECS</span> with GitHub Actions automation</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">AWS Glue</span>
+                                <span class="tech-tag">Lambda</span>
+                                <span class="tech-tag">BigQuery</span>
+                                <span class="tech-tag">Plotly</span>
+                                <span class="tech-tag">GitHub Actions</span>
+                                <span class="tech-tag">ECS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bayer Intern -->
+                <div class="timeline-item fade-in" id="exp-bayer-intern">
+                    <div class="timeline-connector">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="exp-card terminal-window">
+                        <div class="terminal-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="terminal-title">bayer_intern.sh</span>
+                            <span class="exp-date">May 2023 – Oct 2023</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="exp-title"><span class="prompt-inline">$</span> <span class="highlight-cyan">Cloud
+                                    Engineer Intern</span> <span class="exp-company">@ Bayer R&D Services — Arlington,
+                                    TX</span></p>
+                            <ul class="exp-list">
+                                <li><span class="arrow">▶</span> Achieved <span class="highlight-orange">23.4% cut in
+                                        operational costs</span> by automating deletion of idle AWS SageMaker Studio and
+                                    RStudio instances</li>
+                                <li><span class="arrow">▶</span> Developed <span class="tag">Grafana</span> dashboards
+                                    for AWS and on-prem monitoring; enabled <span class="highlight-orange">15% cost
+                                        reduction</span></li>
+                                <li><span class="arrow">▶</span> Implemented <span class="tag">Airflow OAuth</span>
+                                    login integration — reduced manual onboarding by 15%</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">AWS SageMaker</span>
+                                <span class="tech-tag">Grafana</span>
+                                <span class="tech-tag">Airflow</span>
+                                <span class="tech-tag">OAuth</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volkswagen -->
+                <div class="timeline-item fade-in" id="exp-vw">
+                    <div class="timeline-connector">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="exp-card terminal-window">
+                        <div class="terminal-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="terminal-title">volkswagen.sh</span>
+                            <span class="exp-date">Nov 2018 – Jan 2022</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="exp-title"><span class="prompt-inline">$</span> <span
+                                    class="highlight-green">Software Engineer</span> <span class="exp-company">@
+                                    Volkswagen Group Technology Solutions — Pune, India</span></p>
+                            <ul class="exp-list">
+                                <li><span class="arrow">▶</span> Root cause analysis on <span class="tag">AEM</span>
+                                    bottlenecks → <span class="highlight-orange">20% decrease in load times</span></li>
+                                <li><span class="arrow">▶</span> Automated CI/CD pipelines using <span
+                                        class="tag">Ansible</span> for big data workflow infrastructure</li>
+                                <li><span class="arrow">▶</span> Migrated from OpenStack HeatTemplate to <span
+                                        class="tag">AWS CloudFormation</span></li>
+                                <li><span class="arrow">▶</span> Integrated <span class="tag">Nagios</span> + Python
+                                    scripts for distributed systems monitoring</li>
+                                <li><span class="arrow">▶</span> POC for <span class="tag">ELK stack</span> integration
+                                    to monitor AEM applications</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tech-tag">AEM</span>
+                                <span class="tech-tag">Ansible</span>
+                                <span class="tech-tag">CloudFormation</span>
+                                <span class="tech-tag">Nagios</span>
+                                <span class="tech-tag">ELK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /timeline -->
+        </div>
+    </section>
+
+    <!-- ═══ SKILLS ═══ -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title"><span class="cmd-prefix">$ lscpu</span> --skills</h2>
+            <canvas id="networkCanvas"></canvas>
+            <div class="skills-grid">
+
+                <div class="skill-category fade-in">
+                    <div class="skill-cat-header">
+                        <span class="skill-icon">☁️</span>
+                        <h3>Cloud Platforms</h3>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row"><span class="skill-name">AWS</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="92"></div>
+                            </div><span class="skill-pct">92%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">GCP</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="80"></div>
+                            </div><span class="skill-pct">80%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">Azure</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="60"></div>
+                            </div><span class="skill-pct">60%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-cat-header">
+                        <span class="skill-icon">⚙️</span>
+                        <h3>Infrastructure & IaC</h3>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row"><span class="skill-name">Terraform</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="90"></div>
+                            </div><span class="skill-pct">90%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">Ansible</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="75"></div>
+                            </div><span class="skill-pct">75%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">Docker / ECS</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="85"></div>
+                            </div><span class="skill-pct">85%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-cat-header">
+                        <span class="skill-icon">📊</span>
+                        <h3>Data Engineering</h3>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row"><span class="skill-name">Databricks</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="88"></div>
+                            </div><span class="skill-pct">88%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">Apache Spark</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="78"></div>
+                            </div><span class="skill-pct">78%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">BigQuery / Glue</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="82"></div>
+                            </div><span class="skill-pct">82%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-cat-header">
+                        <span class="skill-icon">💻</span>
+                        <h3>Languages</h3>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row"><span class="skill-name">Python</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="90"></div>
+                            </div><span class="skill-pct">90%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">SQL</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="88"></div>
+                            </div><span class="skill-pct">88%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">Bash / Shell</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="80"></div>
+                            </div><span class="skill-pct">80%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-cat-header">
+                        <span class="skill-icon">🔁</span>
+                        <h3>CI/CD & DevOps</h3>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row"><span class="skill-name">GitHub Actions</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="88"></div>
+                            </div><span class="skill-pct">88%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">Airflow</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="75"></div>
+                            </div><span class="skill-pct">75%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">CloudWatch / Grafana</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="82"></div>
+                            </div><span class="skill-pct">82%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-cat-header">
+                        <span class="skill-icon">🔭</span>
+                        <h3>Observability</h3>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row"><span class="skill-name">Monte Carlo</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="85"></div>
+                            </div><span class="skill-pct">85%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">ThoughtSpot</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="78"></div>
+                            </div><span class="skill-pct">78%</span>
+                        </div>
+                        <div class="skill-bar-row"><span class="skill-name">ELK Stack</span>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="72"></div>
+                            </div><span class="skill-pct">72%</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
         </div>
+    </section>
 
-        <!-- Volkswagen -->
-        <div class="timeline-item fade-in" id="exp-vw">
-          <div class="timeline-connector">
-            <div class="timeline-dot"></div>
-          </div>
-          <div class="exp-card terminal-window">
-            <div class="terminal-header">
-              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-              <span class="terminal-title">volkswagen.sh</span>
-              <span class="exp-date">Nov 2018 – Jan 2022</span>
+    <!-- ═══ EDUCATION ═══ -->
+    <section id="education" class="section">
+        <div class="container">
+            <h2 class="section-title"><span class="cmd-prefix">$ uname</span> -a --education</h2>
+            <div class="edu-grid">
+
+                <div class="edu-card terminal-window fade-in">
+                    <div class="terminal-header">
+                        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                        <span class="terminal-title">uta_ms_cs.sh</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt-inline">$</span> <span class="cmd">sysinfo --degree</span></p>
+                        <p class="output edu-degree"><span class="highlight-green">Master of Science</span> in Computer
+                            Science</p>
+                        <p class="output edu-uni">University of Texas at Arlington</p>
+                        <p class="output edu-location">📍 Arlington, TX</p>
+                        <p class="output edu-date">🗓️ Jan 2022 – Dec 2023</p>
+                    </div>
+                </div>
+
+                <div class="edu-card terminal-window fade-in">
+                    <div class="terminal-header">
+                        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                        <span class="terminal-title">pune_be_cs.sh</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt-inline">$</span> <span class="cmd">sysinfo --degree</span></p>
+                        <p class="output edu-degree"><span class="highlight-cyan">Bachelor of Engineering</span> in
+                            Computer Science</p>
+                        <p class="output edu-uni">Savitribai Phule Pune University</p>
+                        <p class="output edu-location">📍 Pune, MH, India</p>
+                        <p class="output edu-date">🗓️ Aug 2014 – May 2018</p>
+                    </div>
+                </div>
+
             </div>
-            <div class="terminal-body">
-              <p class="exp-title"><span class="prompt-inline">$</span> <span class="highlight-green">Software Engineer</span> <span class="exp-company">@ Volkswagen Group Technology Solutions — Pune, India</span></p>
-              <ul class="exp-list">
-                <li><span class="arrow">▶</span> Root cause analysis on <span class="tag">AEM</span> bottlenecks → <span class="highlight-orange">20% decrease in load times</span></li>
-                <li><span class="arrow">▶</span> Automated CI/CD pipelines using <span class="tag">Ansible</span> for big data workflow infrastructure</li>
-                <li><span class="arrow">▶</span> Migrated from OpenStack HeatTemplate to <span class="tag">AWS CloudFormation</span></li>
-                <li><span class="arrow">▶</span> Integrated <span class="tag">Nagios</span> + Python scripts for distributed systems monitoring</li>
-                <li><span class="arrow">▶</span> POC for <span class="tag">ELK stack</span> integration to monitor AEM applications</li>
-              </ul>
-              <div class="tech-tags">
-                <span class="tech-tag">AEM</span>
-                <span class="tech-tag">Ansible</span>
-                <span class="tech-tag">CloudFormation</span>
-                <span class="tech-tag">Nagios</span>
-                <span class="tech-tag">ELK</span>
-              </div>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title"><span class="cmd-prefix">$ ssh</span> rishabh@connect</h2>
+            <div class="terminal-window fade-in contact-terminal">
+                <div class="terminal-header">
+                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                    <span class="terminal-title">contact.sh</span>
+                </div>
+                <div class="terminal-body">
+                    <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">cat /etc/contact.conf</span>
+                    </p>
+                    <br />
+                    <div class="contact-grid">
+                        <a href="mailto:rishabhprasadthakur@gmail.com" class="contact-item" id="contactEmail">
+                            <span class="contact-icon">📧</span>
+                            <div>
+                                <span class="contact-key">EMAIL</span>
+                                <span class="contact-val">rishabhprasadthakur@gmail.com</span>
+                            </div>
+                        </a>
+                        <a href="tel:+16823138425" class="contact-item" id="contactPhone">
+                            <span class="contact-icon">📞</span>
+                            <div>
+                                <span class="contact-key">PHONE</span>
+                                <span class="contact-val">682-313-8425</span>
+                            </div>
+                        </a>
+                        <a href="https://linkedin.com/in/rishabhpthakur" target="_blank" rel="noopener"
+                            class="contact-item" id="contactLinkedIn">
+                            <span class="contact-icon">🔗</span>
+                            <div>
+                                <span class="contact-key">LINKEDIN</span>
+                                <span class="contact-val">linkedin.com/in/rishabhpthakur</span>
+                            </div>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener" class="contact-item"
+                            id="contactGitHub">
+                            <span class="contact-icon">🐙</span>
+                            <div>
+                                <span class="contact-key">GITHUB</span>
+                                <span class="contact-val">github.com</span>
+                            </div>
+                        </a>
+                    </div>
+                    <br />
+                    <p><span class="prompt-inline">root@cloud:~$</span> <span class="caret blink">▋</span></p>
+                </div>
             </div>
-          </div>
         </div>
+    </section>
 
-      </div><!-- /timeline -->
-    </div>
-  </section>
-
-  <!-- ═══ SKILLS ═══ -->
-  <section id="skills" class="section">
-    <div class="container">
-      <h2 class="section-title"><span class="cmd-prefix">$ lscpu</span> --skills</h2>
-      <canvas id="networkCanvas"></canvas>
-      <div class="skills-grid">
-
-        <div class="skill-category fade-in">
-          <div class="skill-cat-header">
-            <span class="skill-icon">☁️</span>
-            <h3>Cloud Platforms</h3>
-          </div>
-          <div class="skill-bars">
-            <div class="skill-bar-row"><span class="skill-name">AWS</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div><span class="skill-pct">92%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">GCP</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div><span class="skill-pct">80%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">Azure</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="60"></div></div><span class="skill-pct">60%</span></div>
-          </div>
+    <!-- ═══ FOOTER ═══ -->
+    <footer id="footer">
+        <div class="footer-content">
+            <p class="footer-text"><span class="prompt-inline">rishabh@portfolio:~$</span> echo <span class="val">"Built
+                    with ❤️ + Terminal Vibes"</span></p>
+            <p class="footer-copy">© 2025 Rishabh Thakur. All rights reserved.</p>
         </div>
+    </footer>
 
-        <div class="skill-category fade-in">
-          <div class="skill-cat-header">
-            <span class="skill-icon">⚙️</span>
-            <h3>Infrastructure & IaC</h3>
-          </div>
-          <div class="skill-bars">
-            <div class="skill-bar-row"><span class="skill-name">Terraform</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div><span class="skill-pct">90%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">Ansible</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div><span class="skill-pct">75%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">Docker / ECS</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div><span class="skill-pct">85%</span></div>
-          </div>
-        </div>
-
-        <div class="skill-category fade-in">
-          <div class="skill-cat-header">
-            <span class="skill-icon">📊</span>
-            <h3>Data Engineering</h3>
-          </div>
-          <div class="skill-bars">
-            <div class="skill-bar-row"><span class="skill-name">Databricks</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div><span class="skill-pct">88%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">Apache Spark</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div><span class="skill-pct">78%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">BigQuery / Glue</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div><span class="skill-pct">82%</span></div>
-          </div>
-        </div>
-
-        <div class="skill-category fade-in">
-          <div class="skill-cat-header">
-            <span class="skill-icon">💻</span>
-            <h3>Languages</h3>
-          </div>
-          <div class="skill-bars">
-            <div class="skill-bar-row"><span class="skill-name">Python</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div><span class="skill-pct">90%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">SQL</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div><span class="skill-pct">88%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">Bash / Shell</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div><span class="skill-pct">80%</span></div>
-          </div>
-        </div>
-
-        <div class="skill-category fade-in">
-          <div class="skill-cat-header">
-            <span class="skill-icon">🔁</span>
-            <h3>CI/CD & DevOps</h3>
-          </div>
-          <div class="skill-bars">
-            <div class="skill-bar-row"><span class="skill-name">GitHub Actions</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div><span class="skill-pct">88%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">Airflow</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div><span class="skill-pct">75%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">CloudWatch / Grafana</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div><span class="skill-pct">82%</span></div>
-          </div>
-        </div>
-
-        <div class="skill-category fade-in">
-          <div class="skill-cat-header">
-            <span class="skill-icon">🔭</span>
-            <h3>Observability</h3>
-          </div>
-          <div class="skill-bars">
-            <div class="skill-bar-row"><span class="skill-name">Monte Carlo</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div><span class="skill-pct">85%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">ThoughtSpot</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div><span class="skill-pct">78%</span></div>
-            <div class="skill-bar-row"><span class="skill-name">ELK Stack</span><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="72"></div></div><span class="skill-pct">72%</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ EDUCATION ═══ -->
-  <section id="education" class="section">
-    <div class="container">
-      <h2 class="section-title"><span class="cmd-prefix">$ uname</span> -a --education</h2>
-      <div class="edu-grid">
-
-        <div class="edu-card terminal-window fade-in">
-          <div class="terminal-header">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-            <span class="terminal-title">uta_ms_cs.sh</span>
-          </div>
-          <div class="terminal-body">
-            <p><span class="prompt-inline">$</span> <span class="cmd">sysinfo --degree</span></p>
-            <p class="output edu-degree"><span class="highlight-green">Master of Science</span> in Computer Science</p>
-            <p class="output edu-uni">University of Texas at Arlington</p>
-            <p class="output edu-location">📍 Arlington, TX</p>
-            <p class="output edu-date">🗓️  Jan 2022 – Dec 2023</p>
-          </div>
-        </div>
-
-        <div class="edu-card terminal-window fade-in">
-          <div class="terminal-header">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-            <span class="terminal-title">pune_be_cs.sh</span>
-          </div>
-          <div class="terminal-body">
-            <p><span class="prompt-inline">$</span> <span class="cmd">sysinfo --degree</span></p>
-            <p class="output edu-degree"><span class="highlight-cyan">Bachelor of Engineering</span> in Computer Science</p>
-            <p class="output edu-uni">Savitribai Phule Pune University</p>
-            <p class="output edu-location">📍 Pune, MH, India</p>
-            <p class="output edu-date">🗓️  Aug 2014 – May 2018</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ CONTACT ═══ -->
-  <section id="contact" class="section">
-    <div class="container">
-      <h2 class="section-title"><span class="cmd-prefix">$ ssh</span> rishabh@connect</h2>
-      <div class="terminal-window fade-in contact-terminal">
-        <div class="terminal-header">
-          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-          <span class="terminal-title">contact.sh</span>
-        </div>
-        <div class="terminal-body">
-          <p><span class="prompt-inline">root@cloud:~$</span> <span class="cmd">cat /etc/contact.conf</span></p>
-          <br/>
-          <div class="contact-grid">
-            <a href="mailto:rishabhprasadthakur@gmail.com" class="contact-item" id="contactEmail">
-              <span class="contact-icon">📧</span>
-              <div>
-                <span class="contact-key">EMAIL</span>
-                <span class="contact-val">rishabhprasadthakur@gmail.com</span>
-              </div>
-            </a>
-            <a href="tel:+16823138425" class="contact-item" id="contactPhone">
-              <span class="contact-icon">📞</span>
-              <div>
-                <span class="contact-key">PHONE</span>
-                <span class="contact-val">682-313-8425</span>
-              </div>
-            </a>
-            <a href="https://linkedin.com/in/rishabhpthakur" target="_blank" rel="noopener" class="contact-item" id="contactLinkedIn">
-              <span class="contact-icon">🔗</span>
-              <div>
-                <span class="contact-key">LINKEDIN</span>
-                <span class="contact-val">linkedin.com/in/rishabhpthakur</span>
-              </div>
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener" class="contact-item" id="contactGitHub">
-              <span class="contact-icon">🐙</span>
-              <div>
-                <span class="contact-key">GITHUB</span>
-                <span class="contact-val">github.com</span>
-              </div>
-            </a>
-          </div>
-          <br/>
-          <p><span class="prompt-inline">root@cloud:~$</span> <span class="caret blink">▋</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FOOTER ═══ -->
-  <footer id="footer">
-    <div class="footer-content">
-      <p class="footer-text"><span class="prompt-inline">rishabh@portfolio:~$</span> echo <span class="val">"Built with ❤️ + Terminal Vibes"</span></p>
-      <p class="footer-copy">© 2025 Rishabh Thakur. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
